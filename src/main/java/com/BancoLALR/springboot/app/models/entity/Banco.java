@@ -8,8 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotEmpty;
 
 
 @Entity
@@ -22,12 +21,12 @@ public class Banco implements Serializable  {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idBanco;
 	
-	@Column 
-	@NonNull
+	@Column (name = "nombre")
+	@NotEmpty
 	private String nombre;
 	
-	@Column
-	@NonNull
+	@Column (name = "ubicacion")
+	@NotEmpty
 	private String ubicacion;
 
 	public long getIdBanco() {
@@ -53,5 +52,11 @@ public class Banco implements Serializable  {
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 	
 }

@@ -2,14 +2,14 @@ package com.BancoLALR.springboot.app.models.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-import org.springframework.lang.NonNull;
 
 
 @Entity
@@ -18,36 +18,31 @@ public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column (name = "ID_Cliente")
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private String idCliente;
+	private long idCliente;
 	
-	@Column (name = "Nombre")
-	@NonNull
+	@Column (name = "nombre")
+	@NotEmpty
 	private String nombre;
 	
-	@Column (name = "Apellido")
-	@NonNull
+	@Column (name = "apellido")
+	@NotEmpty
 	private String apellido;
 	
-	@Column (name = "Telefono")
-	@NonNull
+	@Column (name = "telefono")
+	@NotEmpty
 	private String numeroTelefonico;
 	
-	@Column (name = "Correo")
-	@NonNull
-	private String email;
-	
-	@Column
-	@NonNull
-	private long idCuenta;
+	@Column (name = "correo")
+	@NotEmpty
+	private String correo;
 
-	public String getIdCliente() {
+	public long getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(String idCliente) {
+	public void setIdCliente(long idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -75,20 +70,15 @@ public class Cliente implements Serializable {
 		this.numeroTelefonico = numeroTelefonico;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCorreo() {
+		return correo;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 
-	public long getIdCuenta() {
-		return idCuenta;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-
-	public void setIdCuenta(long idCuenta) {
-		this.idCuenta = idCuenta;
-	}
-
 }

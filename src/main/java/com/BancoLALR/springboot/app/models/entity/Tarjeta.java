@@ -1,15 +1,22 @@
 package com.BancoLALR.springboot.app.models.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
-import org.springframework.lang.NonNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table (name = "tarjetas")
@@ -21,21 +28,22 @@ public class Tarjeta implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idTarjeta;
 	
-	@Column (name = "Numero_de_Tarjeta")
-	@NonNull
+	@Column (name = "numero_de_tarjeta", nullable = false, length = 16)
+	@NotEmpty
 	private String numerodeTarjeta;
 	
-	@Column (name = "IdCuenta")
-	@NonNull
-	private long idCuenta;
-	
-	@Column
-	@NonNull
+	@Column (name = "icv", nullable = false ,length = 3)
+	@NotEmpty
 	private String icv;
 	
-	@Column (name = "Tipo")
-	@NonNull
-	private String tipoTarjeta;
+	@Column (name = "fecha_de_vencimiento")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fechavencimiento;
+	
+	@JoinColumn (name = "cuenta", referencedColumnName = "idCuenta", nullable = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Cuenta cuenta;
 
 	public long getIdTarjeta() {
 		return idTarjeta;
@@ -53,14 +61,6 @@ public class Tarjeta implements Serializable {
 		this.numerodeTarjeta = numerodeTarjeta;
 	}
 
-	public long getIdCuenta() {
-		return idCuenta;
-	}
-
-	public void setIdCuenta(long idCuenta) {
-		this.idCuenta = idCuenta;
-	}
-
 	public String getIcv() {
 		return icv;
 	}
@@ -69,12 +69,24 @@ public class Tarjeta implements Serializable {
 		this.icv = icv;
 	}
 
-	public String getTipoTarjeta() {
-		return tipoTarjeta;
+	public Date getFechavencimiento() {
+		return fechavencimiento;
 	}
 
-	public void setTipoTarjeta(String tipoTarjeta) {
-		this.tipoTarjeta = tipoTarjeta;
+	public void setFechavencimiento(Date fechavencimiento) {
+		this.fechavencimiento = fechavencimiento;
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

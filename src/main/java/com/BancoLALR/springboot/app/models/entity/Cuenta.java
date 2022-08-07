@@ -3,18 +3,20 @@ package com.BancoLALR.springboot.app.models.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
-
-import javax.persistence.Column;
 
 @Entity 
 @Table (name = "cuentas")
@@ -25,20 +27,19 @@ public class Cuenta implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long idCuenta;
-
-	@Column (name = "ID_Cliente")
-	@NonNull
-	private long idCliente;
 	
-	@Column (name = "Saldo_Actual")
-	@NonNull
-	private double saldoActual;
+	@Column (name = "saldo_actual")
+	@NotNull
+	private double saldoactual;
 	
-	@Column (name = "Fecha_de_Creacion")
-	@NonNull
+	@Column (name = "fecha_de_creacion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date creacion;
+	
+	@JoinColumn (name = "cliente", referencedColumnName = "id", nullable = false)
+	@OneToOne (optional = false, fetch = FetchType.LAZY)
+	private Cliente cliente;
 
 	public long getIdCuenta() {
 		return idCuenta;
@@ -48,20 +49,12 @@ public class Cuenta implements Serializable{
 		this.idCuenta = idCuenta;
 	}
 
-	public long getIdCliente() {
-		return idCliente;
+	public double getSaldoactual() {
+		return saldoactual;
 	}
 
-	public void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public double getSaldoActual() {
-		return saldoActual;
-	}
-
-	public void setSaldoActual(double saldoActual) {
-		this.saldoActual = saldoActual;
+	public void setSaldoactual(double saldoactual) {
+		this.saldoactual = saldoactual;
 	}
 
 	public Date getCreacion() {
@@ -70,6 +63,18 @@ public class Cuenta implements Serializable{
 
 	public void setCreacion(Date creacion) {
 		this.creacion = creacion;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

@@ -11,9 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
+
 
 @Entity
 @Table (name = "empleados")
@@ -26,22 +27,23 @@ public class Empleado implements Serializable {
 	private long idEmpleado;
 	
 	@Column (name = "nombre")
-	@NonNull
+	@NotEmpty
 	private String nombre;
 	
 	@Column (name = "apellido")
-	@NonNull
+	@NotEmpty
 	private String apellido;
 	
 	@Column (name = "puesto" )
+	@NotEmpty
 	private String puesto;
 	
-	@Column (name = "Fecha_de_Ingreso")
-	@NonNull
+	@Column (name = "fecha_de_ingreso")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ingreso;
 
+	
 	public long getIdEmpleado() {
 		return idEmpleado;
 	}
@@ -81,5 +83,10 @@ public class Empleado implements Serializable {
 	public void setIngreso(Date ingreso) {
 		this.ingreso = ingreso;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	
 }
